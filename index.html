@@ -171,7 +171,6 @@
             }
         }
 
-        /* --- TEXT LINKS FOR APKS --- */
         .release-text-links {
             display: flex;
             flex-direction: column;
@@ -187,16 +186,11 @@
         }
         .release-text-links a:active { opacity: 0.5; }
 
-        /* --- DOWNLOAD CV BUTTON (KEPT UNCHANGED) --- */
         .cv-btn-wrap {
             text-align: center;
             margin-top: 20px;
         }
         .cv-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             background: var(--text-color);
             color: var(--bg-color);
             font-family: 'Courier New', monospace;
@@ -204,8 +198,12 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             padding: 10px 32px;
-            text-decoration: none;
             border: 1px solid var(--border-color);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             transition: opacity 0.2s;
         }
         .cv-btn:active { opacity: 0.5; }
@@ -269,7 +267,6 @@
             margin-bottom: 25px;
         }
 
-        /* --- RESTORED SPECS GRID --- */
         .detail-specs-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -474,7 +471,7 @@
                 </div>
                 <div class="section-header" style="border-bottom: none; margin-bottom: 5px; margin-top: 15px;">CV</div>
                 <div class="cv-btn-wrap">
-                    <a href="TA2_CV.pdf" download class="cv-btn">
+                    <button onclick="downloadCV()" class="cv-btn">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                             <polyline points="14 2 14 8 20 8"/>
@@ -482,7 +479,7 @@
                             <line x1="16" y1="17" x2="8" y2="17"/>
                         </svg>
                         Download CV
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>
@@ -522,7 +519,6 @@
         <div class="detail-title" id="dTitle">TITLE</div>
         <div class="detail-sub" id="dSub">CATEGORY</div>
 
-        <!-- RESTORED SPECS GRID -->
         <div class="detail-specs-grid" id="detailSpecsGrid">
             <div class="detail-spec-item">
                 <span class="detail-spec-label">ARCHITECTURE</span>
@@ -584,6 +580,16 @@
                 tooltip.classList.add("show");
                 setTimeout(() => { tooltip.classList.remove("show"); }, 1500);
             });
+        }
+
+        // --- DOWNLOAD CV (Direct Download from GitHub) ---
+        function downloadCV() {
+            const link = document.createElement('a');
+            link.href = 'TA2_CV.pdf';
+            link.download = 'TA2_CV.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         // --- DETAIL DATA ---
@@ -712,7 +718,6 @@
             document.getElementById('dTitle').innerText = '▮ ' + data.title;
             document.getElementById('dSub').innerText = data.sub;
 
-            // Set Icon
             const iconContainer = document.getElementById('dIcon');
             if (data.image) {
                 iconContainer.style.display = 'flex';
@@ -721,7 +726,6 @@
                 iconContainer.style.display = 'none';
             }
 
-            // Fill Specs Grid
             const hasSpecs = data.arch && data.androidVer && data.size && data.builtWith;
             if (hasSpecs) {
                 document.getElementById('detailSpecsGrid').style.display = 'grid';
@@ -740,28 +744,22 @@
             const downloadBtn = document.getElementById('dDownload');
             
             if (data.link) {
-                // If it's a Google Drive link → "View PDF"
                 if (data.link.includes('drive.google.com')) {
                     linkBtn.innerText = 'VIEW PDF';
                     linkBtn.href = data.link;
                     linkBtn.style.display = 'inline-block';
                     downloadBtn.style.display = 'none';
-                } 
-                // If it's a Netlify link → "Visit Website"
-                else if (data.link.includes('netlify.app')) {
+                } else if (data.link.includes('netlify.app')) {
                     linkBtn.innerText = 'VISIT WEBSITE';
                     linkBtn.href = data.link;
                     linkBtn.style.display = 'inline-block';
                     downloadBtn.style.display = 'none';
-                } 
-                // If it's a GitHub link → "Visit GitHub"
-                else if (data.link.includes('github.com')) {
+                } else if (data.link.includes('github.com')) {
                     linkBtn.innerText = 'VISIT GITHUB';
                     linkBtn.href = data.link;
                     linkBtn.style.display = 'inline-block';
                     downloadBtn.style.display = 'none';
-                } 
-                else {
+                } else {
                     linkBtn.style.display = 'none';
                     downloadBtn.style.display = 'none';
                 }
@@ -776,7 +774,6 @@
             document.getElementById('main-portfolio').classList.remove('hidden');
         }
 
-        // --- BACK BUTTON SUPPORT ---
         window.addEventListener('popstate', function() {
             if (document.getElementById('detail-view').classList.contains('open')) {
                 closeDetail();
