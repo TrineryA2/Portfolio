@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>TA2 - Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #fff;
+            --border-color: #333;
+            --border-light: #222;
+            --muted-color: #888;
+            --shadow-color: #000;
+        }
+
+        body.light-mode {
+            --bg-color: #fff;
+            --text-color: #000;
+            --border-color: #aaa;
+            --border-light: #ccc;
+            --muted-color: #555;
+            --shadow-color: #fff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @media (min-width: 900px) {
+            body { max-width: 1200px; padding: 30px 40px; }
+        }
+
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .justify-between { justify-content: space-between; }
+        .items-start { align-items: flex-start; }
+        .text-right { text-align: right; }
+        .text-muted { color: var(--muted-color); }
+        .text-sm { font-size: 12px; }
+        .text-xs { font-size: 10px; }
+
+        .mb-1 { margin-bottom: 12px; }
+        .mb-2 { margin-bottom: 25px; }
+        .mb-3 { margin-bottom: 40px; }
+        .gap-1 { gap: 8px; }
+        .gap-2 { gap: 20px; }
+
+        a { text-decoration: none; color: inherit; }
+        .nav-link { transition: opacity 0.2s; }
+        .nav-link:active { opacity: 0.5; }
+
+        .pixel-title {
+            font-family: 'Courier New', monospace;
+            font-size: 36px;
+            font-weight: bold;
+            line-height: 0.85;
+            letter-spacing: -1px;
+            text-shadow: 0px 2px 0 var(--shadow-color), 0px -2px 0 var(--shadow-color);
+            margin-bottom: 15px;
+            transition: text-shadow 0.3s ease;
+        }
+        .pixel-title span { display: inline-block; margin-right: 3px; }
+
+        .nav-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            font-size: 11px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: border-color 0.3s ease;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        .nav-icon-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 18px;
+            height: 18px;
+            border: 1px solid var(--muted-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .theme-icon-svg {
+            width: 12px;
+            height: 12px;
+            fill: var(--text-color);
+            transition: fill 0.3s ease;
+        }
+
+        .section-header {
+            font-size: 12px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            scroll-margin-top: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .block-text { display: block; margin-bottom: 8px; }
+        .indent-text { padding-left: 15px; border-left: 1px solid var(--border-color); margin-top: 15px; transition: border-color 0.3s ease; }
+
+        .group-section {
+            margin-bottom: 35px;
+        }
+        .group-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .group-item {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid var(--border-light);
+            padding: 12px 0;
+            gap: 4px;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+        }
+        .group-item:last-child { border-bottom: none; }
+        .group-item-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--text-color);
+            letter-spacing: 1px;
+        }
+        .group-item-meta {
+            font-size: 11px;
+            color: var(--muted-color);
+        }
+        .group-item:active { opacity: 0.5; }
+
+        @media (min-width: 900px) {
+            .group-list {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0 40px;
+                border-top: 1px solid var(--border-light);
+                padding-top: 10px;
+            }
+            .group-item {
+                padding: 14px 0;
+            }
+            .group-item:nth-last-child(2):nth-child(odd) {
+                border-bottom: none;
+            }
+        }
+
+        /* --- TEXT LINKS FOR APKS --- */
+        .release-text-links {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 5px;
+        }
+        .release-text-links a {
+            color: var(--text-color);
+            font-size: 13px;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            transition: opacity 0.2s;
+        }
+        .release-text-links a:active { opacity: 0.5; }
+
+        /* --- DOWNLOAD CV BUTTON (KEPT UNCHANGED) --- */
+        .cv-btn-wrap {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .cv-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--text-color);
+            color: var(--bg-color);
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 10px 32px;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: opacity 0.2s;
+        }
+        .cv-btn:active { opacity: 0.5; }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 10px;
+            color: var(--muted-color);
+            padding: 15px 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        #main-portfolio { display: block; transition: none; }
+        #main-portfolio.hidden { display: none; }
+
+        #detail-view { display: none; padding: 20px 0; }
+        #detail-view.open { display: block; }
+
+        .detail-back {
+            color: var(--muted-color);
+            font-size: 12px;
+            cursor: pointer;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .detail-back:active { color: var(--text-color); }
+
+        .detail-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #333, #111);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        .detail-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .detail-title {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .detail-sub {
+            font-size: 13px;
+            color: var(--muted-color);
+            margin-bottom: 25px;
+        }
+
+        /* --- RESTORED SPECS GRID --- */
+        .detail-specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+            margin-bottom: 25px;
+        }
+        .detail-spec-item span { display: block; }
+        .detail-spec-label {
+            font-size: 10px;
+            color: var(--muted-color);
+        }
+        .detail-spec-value {
+            font-size: 13px;
+            margin-top: 3px;
+            color: var(--text-color);
+        }
+
+        .detail-desc {
+            text-transform: none;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-color);
+            margin-bottom: 15px;
+        }
+        .detail-how {
+            text-transform: none;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-color);
+            margin-bottom: 25px;
+            padding: 15px;
+            background: var(--shadow-color);
+            border: 1px solid var(--border-color);
+        }
+        .detail-how-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--muted-color);
+            display: block;
+            margin-bottom: 6px;
+        }
+        .detail-btn {
+            display: inline-block;
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 10px 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .detail-btn:active { opacity: 0.5; }
+
+        #copy-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            background: var(--text-color);
+            color: var(--bg-color);
+            text-align: center;
+            border-radius: 4px;
+            padding: 4px 8px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            font-size: 12px;
+            transition: opacity 0.3s;
+        }
+        #copy-tooltip.show { visibility: visible; opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <div id="copy-tooltip">COPIED</div>
+
+    <!-- ===== MAIN PORTFOLIO ===== -->
+    <div id="main-portfolio">
+        <header class="flex justify-between items-start mb-1">
+            <h1 class="pixel-title"><span>TA2</span></h1>
+            <div class="text-right text-sm" style="margin-top: 5px; line-height: 1.4;">
+                <div>/ WEB DEVELOPMENT</div>
+                <div>& GAME DESIGN</div>
+                <div>& CREATIVE WRITING</div>
+                <br>
+                <div>/ SELF-TAUGHT</div>
+                <div>ALWAYS BUILDING</div>
+            </div>
+        </header>
+
+        <nav class="nav-bar">
+            <div class="nav-item text-muted"><span class="nav-icon-box">⌂</span> HOME</div>
+            <a href="#projects" class="nav-item nav-link"><span class="nav-icon-box">◫</span> PROJECTS</a>
+            <a href="#downloads" class="nav-item nav-link"><span class="nav-icon-box">◑</span> DOWNLOADS</a>
+            <div class="nav-item nav-link" onclick="toggleTheme()">
+                <span class="nav-icon-box">
+                    <svg id="theme-icon" class="theme-icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                    </svg>
+                </span> THEME
+            </div>
+        </nav>
+
+        <section class="mb-3">
+            <h2 class="section-header">WHO I AM</h2>
+            <div class="block-text">I build web apps, prototype game concepts, and write fiction. I don't do "AI-generated" resumes. I do things that work, worlds that feel real, and code that's intentional.</div>
+            <div class="block-text text-muted">I'm a beginner who actually builds things—bookshelves, games, libraries, stories, and design docs. That puts me ahead of most people stuck on tutorials.</div>
+        </section>
+
+        <section id="projects" class="mb-3">
+            <h2 class="section-header">MY PROJECTS</h2>
+
+            <!-- APPS & WEB -->
+            <div class="group-section">
+                <div class="section-header" style="border-bottom: none; margin-bottom: 5px;">APPS & WEB</div>
+                <div class="group-list">
+                    <div class="group-item" onclick="openDetail('gamespace')">
+                        <div class="group-item-title">▮ GAMESPACE</div>
+                        <div class="group-item-meta">Offline game library manager · Android</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('bookshelf')">
+                        <div class="group-item-title">▮ BOOKSHELF</div>
+                        <div class="group-item-meta">3D wooden shelf book manager · Android</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('primary')">
+                        <div class="group-item-title">▮ PRIMARY</div>
+                        <div class="group-item-meta">Color memory game · Android</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('stumble')">
+                        <div class="group-item-title">▮ STUMBLE</div>
+                        <div class="group-item-meta">Internet randomizer · Web</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME DESIGN DOCUMENTS -->
+            <div class="group-section">
+                <div class="section-header" style="border-bottom: none; margin-bottom: 5px;">GAME DESIGN DOCUMENTS</div>
+                <div class="group-list">
+                    <div class="group-item" onclick="openDetail('theloop')">
+                        <div class="group-item-title">▮ THE LOOP</div>
+                        <div class="group-item-meta">3D narrative platformer</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('concreteshift')">
+                        <div class="group-item-title">▮ CONCRETE SHIFT</div>
+                        <div class="group-item-meta">Rhythm survival horror</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('escapethesale')">
+                        <div class="group-item-title">▮ ESCAPE THE SALE</div>
+                        <div class="group-item-meta">Maze runner · Comedy</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('animalrider')">
+                        <div class="group-item-title">▮ ANIMAL RIDER</div>
+                        <div class="group-item-meta">Arcade racing</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('ludo')">
+                        <div class="group-item-title">▮ LUDO ROGUELIKE</div>
+                        <div class="group-item-meta">Board game + cards</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CREATIVE WRITING -->
+            <div class="group-section">
+                <div class="section-header" style="border-bottom: none; margin-bottom: 5px;">CREATIVE WRITING</div>
+                <div class="group-list">
+                    <div class="group-item" onclick="openDetail('divided')">
+                        <div class="group-item-title">▮ THE DIVIDED SUBJECT</div>
+                        <div class="group-item-meta">Body horror · Identity</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('immortal')">
+                        <div class="group-item-title">▮ THE IMMORTAL DEAD</div>
+                        <div class="group-item-meta">Existential dread</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('crawling')">
+                        <div class="group-item-title">▮ THE CRAWLING FAMILY</div>
+                        <div class="group-item-meta">Fetal horror</div>
+                    </div>
+                    <div class="group-item" onclick="openDetail('friendfoe')">
+                        <div class="group-item-title">▮ FRIEND AND FOE</div>
+                        <div class="group-item-meta">Duality · Self-destruction</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DOWNLOAD & RELEASE -->
+        <section id="downloads" class="mb-3">
+            <h2 class="section-header">DOWNLOAD & RELEASE</h2>
+            <div class="group-section">
+                <div class="section-header" style="border-bottom: none; margin-bottom: 5px;">APK</div>
+                <div class="release-text-links">
+                    <a href="https://github.com/TrineryA2/Primary" target="_blank">Primary APK</a>
+                    <a href="https://github.com/TrineryA2/Bookshelf" target="_blank">Bookshelf APK</a>
+                    <a href="https://github.com/TrineryA2/GameSpace" target="_blank">GameSpace APK</a>
+                </div>
+                <div class="section-header" style="border-bottom: none; margin-bottom: 5px; margin-top: 15px;">CV</div>
+                <div class="cv-btn-wrap">
+                    <a href="TA2_CV.pdf" download class="cv-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                        Download CV
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="mb-2">
+            <h2 class="section-header">CONTACT</h2>
+            <div class="flex flex-col gap-1 text-sm">
+                <div class="flex justify-between" onclick="copyEmail()">
+                    <span>EMAIL</span>
+                    <span class="text-muted" style="cursor: pointer;">TrineryA2@gmail.com</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>GITHUB</span>
+                    <a href="https://github.com/TrineryA2" target="_blank" class="text-muted" style="cursor: pointer;">github.com/TrineryA2</a>
+                </div>
+                <div class="flex justify-between">
+                    <span>ITCH.IO</span>
+                    <a href="https://trinerya2.itch.io" target="_blank" class="text-muted" style="cursor: pointer;">trinerya2.itch.io</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer-grid">
+            <div>TA2<br><span class="text-xs">© 2026</span></div>
+            <div class="text-right text-xs">TrineryA2@gmail.com</div>
+            <div class="text-xs">github.com/TrineryA2</div>
+            <div class="text-right text-xs">trinerya2.itch.io</div>
+        </footer>
+    </div>
+
+    <!-- ===== DETAIL VIEW ===== -->
+    <div id="detail-view">
+        <span class="detail-back" onclick="closeDetail()">[ BACK TO PORTFOLIO ]</span>
+        
+        <div class="detail-icon" id="dIcon">0</div>
+        <div class="detail-title" id="dTitle">TITLE</div>
+        <div class="detail-sub" id="dSub">CATEGORY</div>
+
+        <!-- RESTORED SPECS GRID -->
+        <div class="detail-specs-grid" id="detailSpecsGrid">
+            <div class="detail-spec-item">
+                <span class="detail-spec-label">ARCHITECTURE</span>
+                <span class="detail-spec-value" id="dArch">-</span>
+            </div>
+            <div class="detail-spec-item">
+                <span class="detail-spec-label">ANDROID VERSION</span>
+                <span class="detail-spec-value" id="dAndroid">-</span>
+            </div>
+            <div class="detail-spec-item">
+                <span class="detail-spec-label">SIZE</span>
+                <span class="detail-spec-value" id="dSize">-</span>
+            </div>
+            <div class="detail-spec-item">
+                <span class="detail-spec-label">BUILT WITH</span>
+                <span class="detail-spec-value" id="dBuiltWith">-</span>
+            </div>
+        </div>
+
+        <div class="detail-desc" id="dDesc">DESCRIPTION</div>
+        
+        <div class="detail-how" id="dHow">
+            <span class="detail-how-label">HOW IT WORKS</span>
+            <span id="dHowText">-</span>
+        </div>
+
+        <a id="dLink" href="#" target="_blank" class="detail-btn" style="display:none;">VISIT</a>
+        <a id="dDownload" href="#" download class="detail-btn" style="display:none; margin-top: 10px;">DOWNLOAD</a>
+    </div>
+
+    <script>
+        // --- THEME TOGGLE ---
+        const sunPath = "M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41";
+        const moonPath = "M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c0.83 0 1.64-0.12 2.41-0.33-2.35-1.19-4-3.6-4-6.34s1.65-5.15 4-6.34c-0.77-0.21-1.58-0.33-2.41-0.33z";
+
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById('theme-icon').setAttribute('d', moonPath);
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                localStorage.setItem('theme', 'light');
+                icon.setAttribute('d', moonPath);
+            } else {
+                localStorage.setItem('theme', 'dark');
+                icon.setAttribute('d', sunPath);
+            }
+        }
+
+        // --- COPY EMAIL ---
+        function copyEmail() {
+            const email = "TrineryA2@gmail.com";
+            navigator.clipboard.writeText(email).then(() => {
+                const tooltip = document.getElementById("copy-tooltip");
+                tooltip.classList.add("show");
+                setTimeout(() => { tooltip.classList.remove("show"); }, 1500);
+            });
+        }
+
+        // --- DETAIL DATA ---
+        const details = {
+            gamespace: {
+                title: 'GAMESPACE',
+                sub: 'APPS & WEB · Android',
+                image: 'gameSpace.png',
+                desc: 'A fully offline, customizable game library manager for Android. Catalog your favorite games, organize them into collections, add cover images, track ratings, and personalize the entire app — all without an internet connection.',
+                howItWorks: 'The user opens the app and sees their game library. They can tap the ADD button to input a game title, upload a cover image, select a platform, rate it, and choose a collection. The app saves everything locally using IndexedDB. Users can switch between a scroll view and a grid view, change themes using the live settings, or even inject custom HTML, CSS, and JavaScript through the built-in code editors in the Settings tab.',
+                arch: 'UNIVERSAL (32-BIT / 64-BIT)',
+                androidVer: 'ANDROID 5.0+',
+                size: '~3.5 MB',
+                builtWith: 'HTML · CSS · JavaScript · IndexedDB',
+                link: 'https://github.com/TrineryA2/GameSpace'
+            },
+            bookshelf: {
+                title: 'BOOKSHELF',
+                sub: 'APPS & WEB · Android',
+                image: 'bookshelf.png',
+                desc: 'An offline PWA library manager that lets you store books, track reading status, and view them organized on a 3D wooden shelf interface.',
+                howItWorks: 'The user opens the app and sees a 3D wooden shelf. By tapping the ADD BOOK button, a form appears. The user enters the title and author, selects a cover color or uploads a custom cover image, and picks a status (Reading, Not Started, Complete). The book appears on the shelf instantly. Swiping left or right reveals more shelves. Tapping My Books displays all entries in a searchable list format.',
+                arch: 'UNIVERSAL (32-BIT / 64-BIT)',
+                androidVer: 'ANDROID 5.0+',
+                size: '10.5 MB',
+                builtWith: 'PWA · JavaScript · CSS',
+                link: 'https://github.com/TrineryA2/Bookshelf'
+            },
+            primary: {
+                title: 'PRIMARY',
+                sub: 'APPS & WEB · Android',
+                image: 'primary.png',
+                desc: 'A color memory game where you must memorize a target color and accurately recreate it using RGB sliders. Your score is calculated based on how precise your color matching is.',
+                howItWorks: 'The user is presented with a target color on the screen. After memorizing it, the user must move three RGB sliders (Red, Green, Blue) to recreate the exact shade. Once the user confirms their attempt, the app compares the selected color to the target color and assigns a score based on the accuracy of the match.',
+                arch: 'UNIVERSAL (32-BIT / 64-BIT)',
+                androidVer: 'ANDROID 5.0+',
+                size: '10.68 MB',
+                builtWith: 'HTML · CSS · JavaScript',
+                link: 'https://github.com/TrineryA2/Primary'
+            },
+            stumble: {
+                title: 'STUMBLE',
+                sub: 'APPS & WEB · Web',
+                image: 'stumble.png',
+                desc: 'A web randomizer tool that sends you to hidden, weird, and interesting corners of the internet with a single tap.',
+                howItWorks: 'The user taps the STUMBLE button on the screen. The app queries a curated list of obscure and interesting websites, then redirects the user to a random destination. Each tap sends you to a new hidden corner of the internet, providing endless discovery without any repeated destinations.',
+                arch: 'BROWSER',
+                androidVer: 'N/A',
+                size: 'N/A',
+                builtWith: 'HTML · CSS · JavaScript',
+                link: 'https://stumble-io.netlify.app'
+            },
+            theloop: {
+                title: 'THE LOOP',
+                sub: 'GAME DESIGN DOCUMENTS',
+                desc: 'A narrative-driven 3D platformer about breaking free from conformity and facing the consequences of freedom. The player controls a child who breaks free from an oppressive school system to explore a vibrant forest. Through rhythm-based petting, healing injured animals, and solving environmental puzzles, the player bonds with wildlife. The game builds toward an emotional chase sequence and a thought-provoking ending about free will and consequence.',
+                howItWorks: 'The player controls a child who breaks free from an oppressive school system to explore a vibrant forest. Through rhythm-based petting, healing injured animals, and solving environmental puzzles, the player bonds with wildlife. The game builds toward an emotional chase sequence and a thought-provoking ending about free will and consequence.',
+                link: 'https://drive.google.com/file/d/1NRxaWkRofYcpiQIXNQx3rSz6AwUielph/view'
+            },
+            concreteshift: {
+                title: 'CONCRETE SHIFT',
+                sub: 'GAME DESIGN DOCUMENTS',
+                desc: 'A first-person rhythm survival game about a construction worker trapped in a concrete pipe filling with wet cement. Using visual rhythm cues, the player attempts to climb out, reach a phone, or survive until morning while managing the risk of permanent entrapment.',
+                howItWorks: 'The player controls a construction worker who falls into a vertical pipe of wet cement. They must carefully manage their movements to avoid sinking deeper or letting the cement harden. Using visual rhythm cues, the player attempts to climb out, reach a phone, or survive until morning while managing the risk of permanent entrapment.',
+                link: 'https://drive.google.com/file/d/1no5a8Jb-T1rSOrofxKcoJ6NNpbEFIId6/view'
+            },
+            escapethesale: {
+                title: 'ESCAPE THE SALE',
+                sub: 'GAME DESIGN DOCUMENTS',
+                desc: 'A first-person maze runner where a husband must escape a furniture store before his wife\'s shopping bill becomes overwhelming. Navigate a procedurally generated maze, dodging NPCs, and find the exit before getting caught.',
+                howItWorks: 'The player controls a husband trapped in a massive furniture store during a sale. They must navigate a procedurally generated maze of showrooms and aisles, dodging NPCs and the wife\'s friends, all while keeping the total shopping bill as low as possible. Find the exit before getting caught and forced to checkout.',
+                link: 'https://drive.google.com/file/d/1hEBGfhJZft8erwAdDGGZtxo3Qs2-uIFa/view'
+            },
+            animalrider: {
+                title: 'ANIMAL RIDER',
+                sub: 'GAME DESIGN DOCUMENTS',
+                desc: 'An arcade racing game about high-speed riding on animals. Drifting builds energy to unlock a temporary overpower state. The player rides animals at high speeds through traffic-filled roads and mountain paths.',
+                howItWorks: 'The player rides animals at high speeds through traffic-filled roads and mountain paths. By drifting around corners and taking risks, the player builds up an energy meter. When full, they can activate Super Sonic Mode to destroy obstacles and reach extreme speeds. The game is an endless runner where control and risk management are key.',
+                link: 'https://drive.google.com/file/d/1oV1CDefZn5pXu8UtplgRDatCfoCBvcKj/view'
+            },
+            ludo: {
+                title: 'LUDO ROGUELIKE',
+                sub: 'GAME DESIGN DOCUMENTS',
+                desc: 'A classic Ludo board game fused with a card system that breaks the rules every turn. Cards like Shotgun, Shield, and Win Steak completely change the flow of the game. Supports 2-4 players in hot-seat mode or against AI.',
+                howItWorks: 'This is classic Ludo combined with a card system. At the start of each turn, the player rolls the dice, draws a card, and chooses whether to play it. Cards like Shotgun, Shield, and Win Steak completely change the flow of the game. It supports 2-4 players in hot-seat mode or against AI, making every match feel fresh and unpredictable.',
+                link: 'https://drive.google.com/file/d/18PtNKbq7WeXcZjU2oLqRSorN8yKN41hG/view'
+            },
+            divided: {
+                title: 'THE DIVIDED SUBJECT',
+                sub: 'CREATIVE WRITING',
+                desc: 'A contained entity that tries to split itself in two. The regenerative cells interpret all damage as corruption requiring restoration into a singular whole organism — making the subject biologically incapable of achieving the divided existence it seeks.',
+                howItWorks: 'The regenerative cells interpret all damage as corruption requiring restoration into a singular whole organism — making the subject biologically incapable of achieving the divided existence it seeks.',
+                link: 'https://drive.google.com/file/d/1yksd0ze46MmbidEi6KoK_4Jna_vheFTu/view'
+            },
+            immortal: {
+                title: 'THE IMMORTAL DEAD',
+                sub: 'CREATIVE WRITING',
+                desc: 'A biological organism trapped in an endless cycle of death and resurrection. Every death event produces complete neural termination, rapid cellular reconstruction, and re-emergence of consciousness with unstable continuity.',
+                howItWorks: 'Every death event produces complete neural termination, rapid cellular reconstruction, and re-emergence of consciousness with unstable continuity.',
+                link: 'https://drive.google.com/file/d/1p-KntRqzAJaqW6GwtGmzNNtcwIYX5V1O/view'
+            },
+            crawling: {
+                title: 'THE CRAWLING FAMILY',
+                sub: 'CREATIVE WRITING',
+                desc: 'A fetal experiment that fused with its host. The organism drags the still-living host body during movement, demonstrating territorial attachment and contradictory behavioral patterns.',
+                howItWorks: 'The organism drags the still-living host body during movement, demonstrating territorial attachment and contradictory behavioral patterns.',
+                link: 'https://drive.google.com/file/d/1SvYkM_qcxCv9br88zy_vIYczkm3ju4xV/view'
+            },
+            friendfoe: {
+                title: 'FRIEND AND FOE',
+                sub: 'CREATIVE WRITING',
+                desc: 'A hybrid creature trapped between self-preservation and self-destruction. The organism\'s divided neurological structure is permanently locked between homicidal violence and desperate requests for assistance.',
+                howItWorks: 'The organism\'s divided neurological structure is permanently locked between homicidal violence and desperate requests for assistance.',
+                link: 'https://drive.google.com/file/d/1kxr_lTbm-gZSyLdBv_vZyajIAotmStbM/view'
+            }
+        };
+
+        // --- OPEN / CLOSE DETAIL ---
+        function openDetail(id) {
+            const data = details[id];
+            if (!data) return;
+            document.getElementById('main-portfolio').classList.add('hidden');
+            document.getElementById('detail-view').classList.add('open');
+            window.scrollTo(0, 0);
+
+            document.getElementById('dTitle').innerText = '▮ ' + data.title;
+            document.getElementById('dSub').innerText = data.sub;
+
+            // Set Icon
+            const iconContainer = document.getElementById('dIcon');
+            if (data.image) {
+                iconContainer.style.display = 'flex';
+                iconContainer.innerHTML = `<img src="${data.image}" alt="${data.title} icon" onerror="this.style.display='none'; this.parentElement.innerText='${data.title.charAt(0)}';">`;
+            } else {
+                iconContainer.style.display = 'none';
+            }
+
+            // Fill Specs Grid
+            const hasSpecs = data.arch && data.androidVer && data.size && data.builtWith;
+            if (hasSpecs) {
+                document.getElementById('detailSpecsGrid').style.display = 'grid';
+                document.getElementById('dArch').innerText = data.arch;
+                document.getElementById('dAndroid').innerText = data.androidVer;
+                document.getElementById('dSize').innerText = data.size;
+                document.getElementById('dBuiltWith').innerText = data.builtWith;
+            } else {
+                document.getElementById('detailSpecsGrid').style.display = 'none';
+            }
+
+            document.getElementById('dDesc').innerText = data.desc;
+            document.getElementById('dHowText').innerText = data.howItWorks || 'The user can interact with the app\'s core features directly.';
+
+            const linkBtn = document.getElementById('dLink');
+            const downloadBtn = document.getElementById('dDownload');
+            
+            if (data.link) {
+                // If it's a Google Drive link → "View PDF"
+                if (data.link.includes('drive.google.com')) {
+                    linkBtn.innerText = 'VIEW PDF';
+                    linkBtn.href = data.link;
+                    linkBtn.style.display = 'inline-block';
+                    downloadBtn.style.display = 'none';
+                } 
+                // If it's a Netlify link → "Visit Website"
+                else if (data.link.includes('netlify.app')) {
+                    linkBtn.innerText = 'VISIT WEBSITE';
+                    linkBtn.href = data.link;
+                    linkBtn.style.display = 'inline-block';
+                    downloadBtn.style.display = 'none';
+                } 
+                // If it's a GitHub link → "Visit GitHub"
+                else if (data.link.includes('github.com')) {
+                    linkBtn.innerText = 'VISIT GITHUB';
+                    linkBtn.href = data.link;
+                    linkBtn.style.display = 'inline-block';
+                    downloadBtn.style.display = 'none';
+                } 
+                else {
+                    linkBtn.style.display = 'none';
+                    downloadBtn.style.display = 'none';
+                }
+            } else {
+                linkBtn.style.display = 'none';
+                downloadBtn.style.display = 'none';
+            }
+        }
+
+        function closeDetail() {
+            document.getElementById('detail-view').classList.remove('open');
+            document.getElementById('main-portfolio').classList.remove('hidden');
+        }
+
+        // --- BACK BUTTON SUPPORT ---
+        window.addEventListener('popstate', function() {
+            if (document.getElementById('detail-view').classList.contains('open')) {
+                closeDetail();
+                history.pushState(null, null, window.location.href);
+            }
+        });
+        history.pushState(null, null, window.location.href);
+    </script>
+</body>
+</html>
