@@ -585,13 +585,12 @@
         // --- DOWNLOAD CV (Direct Download from GitHub) ---
         function downloadCV() {
             const link = document.createElement('a');
-            link.href = 'TA2_CV.pdf';
-            link.download = 'TA2_CV.pdf';
+            link.href = 'TA2_CV.pdf.pdf';   // <-- CHANGE THIS to match your file
+            link.download = 'TA2_CV.pdf';    // This renames it back to clean .pdf on download
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
-
         // --- DETAIL DATA ---
         const details = {
             gamespace: {
