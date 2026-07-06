@@ -582,15 +582,16 @@
             });
         }
 
-        // --- DOWNLOAD CV (Direct Download from GitHub) ---
+        // --- DOWNLOAD CV (Google Doc Direct Download) ---
         function downloadCV() {
             const link = document.createElement('a');
-            link.href = 'TA2_CV.pdf.pdf';   // <-- CHANGE THIS to match your file
-            link.download = 'TA2_CV.pdf';    // This renames it back to clean .pdf on download
+            link.href = 'https://docs.google.com/document/d/1PADvuWOWgcMJF9Araj6L7COsLapxRF-MFBf_wL8pKqg/export?format=doc';
+            link.download = 'TA2_CV.doc';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }
+
         // --- DETAIL DATA ---
         const details = {
             gamespace: {
