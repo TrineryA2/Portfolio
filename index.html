@@ -186,28 +186,6 @@
         }
         .release-text-links a:active { opacity: 0.5; }
 
-        .cv-btn-wrap {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .cv-btn {
-            background: var(--text-color);
-            color: var(--bg-color);
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 10px 32px;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: opacity 0.2s;
-        }
-        .cv-btn:active { opacity: 0.5; }
-
         .footer-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -432,6 +410,11 @@
                         <div class="group-item-title">▮ LUDO ROGUELIKE</div>
                         <div class="group-item-meta">Board game + cards</div>
                     </div>
+                    <!-- NEW GWG ENTRY ADDED HERE -->
+                    <div class="group-item" onclick="openDetail('gwg')">
+                        <div class="group-item-title">▮ GWG</div>
+                        <div class="group-item-meta">Dystopian survival concept</div>
+                    </div>
                 </div>
             </div>
 
@@ -468,18 +451,6 @@
                     <a href="https://github.com/TrineryA2/Primary" target="_blank">Primary APK</a>
                     <a href="https://github.com/TrineryA2/Bookshelf" target="_blank">Bookshelf APK</a>
                     <a href="https://github.com/TrineryA2/GameSpace" target="_blank">GameSpace APK</a>
-                </div>
-                <div class="section-header" style="border-bottom: none; margin-bottom: 5px; margin-top: 15px;">CV</div>
-                <div class="cv-btn-wrap">
-                    <button onclick="downloadCV()" class="cv-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                            <line x1="16" y1="13" x2="8" y2="13"/>
-                            <line x1="16" y1="17" x2="8" y2="17"/>
-                        </svg>
-                        Download CV
-                    </button>
                 </div>
             </div>
         </section>
@@ -582,16 +553,6 @@
             });
         }
 
-        // --- DOWNLOAD CV (Google Doc Direct Download) ---
-        function downloadCV() {
-            const link = document.createElement('a');
-            link.href = 'https://docs.google.com/document/d/1PADvuWOWgcMJF9Araj6L7COsLapxRF-MFBf_wL8pKqg/export?format=doc';
-            link.download = 'TA2_CV.doc';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
         // --- DETAIL DATA ---
         const details = {
             gamespace: {
@@ -676,6 +637,14 @@
                 desc: 'A classic Ludo board game fused with a card system that breaks the rules every turn. Cards like Shotgun, Shield, and Win Steak completely change the flow of the game. Supports 2-4 players in hot-seat mode or against AI.',
                 howItWorks: 'This is classic Ludo combined with a card system. At the start of each turn, the player rolls the dice, draws a card, and chooses whether to play it. Cards like Shotgun, Shield, and Win Steak completely change the flow of the game. It supports 2-4 players in hot-seat mode or against AI, making every match feel fresh and unpredictable.',
                 link: 'https://drive.google.com/file/d/18PtNKbq7WeXcZjU2oLqRSorN8yKN41hG/view'
+            },
+            // NEW GWG DATA ENTRY ADDED HERE
+            gwg: {
+                title: 'GWG',
+                sub: 'GAME DESIGN DOCUMENTS',
+                desc: 'A dystopian survival concept where a teenager must escape a polluted city, only to discover the whole planet is contaminated.',
+                howItWorks: 'The player must balance work, rent, food, and taxes while traveling toward the city border. The game ends with a devastating realization that there is no escape.',
+                link: 'https://drive.google.com/file/d/1v_enC6pb-Xo03ULZn2TOyWjNbuU_sXjO/view'
             },
             divided: {
                 title: 'THE DIVIDED SUBJECT',
@@ -783,4 +752,5 @@
         history.pushState(null, null, window.location.href);
     </script>
 </body>
+</html>
 </html>
